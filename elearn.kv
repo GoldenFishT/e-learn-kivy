@@ -1,6 +1,60 @@
 # File name: elearn.kv
 #:kivy 2.3.0
 
+<LessonListScreen>:
+    LessonInfoRV:
+
+<LessonInfoLabel@Label>
+    text_size: self.size
+    padding: 10, 10, 10, 10
+
+<Button>
+    padding: 10, 10, 10, 10
+
+<LessonInfoScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+
+        LessonNameBtn:
+            text: str(root.name)
+            halign:'left'
+            valign: 'top'
+            font_size: dp(45)
+            size_hint_y: 0.15
+        LessonInfoLabel:
+            text: 'state: ' + str(root.lesson_state)
+            halign:'left'
+            font_size: dp(15)
+            size_hint_y: 0.1
+        LessonInfoLabel:
+            text: "instructor: " + str(root.instructor)
+            halign:'left'
+            font_size: dp(15)
+            size_hint_y: 0.1
+            
+        LessonInfoLabel:
+            text: 'Description'
+            halign:'left'
+            font_size: dp(15)
+            size_hint_y: 0.15
+        LessonInfoLabel:
+            halign:'left'
+            valign: 'top'
+            markup: True
+            text: '[b]The [color=ff0000]description[/b] can be[/color] [i]quite[/i] long'
+
+        Button:
+            size_hint: 0.6, 0.5
+            halign: 'center'
+            valign: 'center'
+            center_x: root.center_x
+            size_hint_y: 0.1
+            text: root.action
+            padding: 10, 10, 10, 20
+<LessonContentScreen>:
+    Label:
+        text: 'LessonContent'
+
 
 <LessonInfoButton>:
     background_color: 0, 0, 0, 1
@@ -15,10 +69,11 @@
             dash_offset: 5
             joint: 'round'
             close: True
-    LessonInfoBtn:
+    LessonNameBtn:
         text_size: root.width, None
+        lesson_id: root.lesson_id
         text: root.name
-        on_press: self.parent.show_info()
+        on_press: self.parent.show_info(self.lesson_id)
     GridLayout:
         cols: 2
         Label:
@@ -58,20 +113,24 @@
                 text: 'long tag2'
             TagBtn:
                 text: 'tag3'
-<LessonInfoBtn@Button>:
+<LessonNameBtn@Button>:
     background_color: (0, 0, 0, 1)
 	font_size: dp(45)
+    text_size: self.size
     canvas.after:
         Color:
             rgba: (1, 1, 1, 1)
         Line:
-            width: 2
-            points: 0,0, self.width,0
+            width: 1
+            dash_length: 10
+            dash_offset: 5
+            points: self.x, self.y, self.x + self.width,self.y
 
 <TagBtn@Button>:
     background_color: (0, 0, 0, 1)
     text: 'tag'
     size_hint: None, None
+    text_size: None, None
     size: self.texture_size
     font_size: dp(15)
     padding: 10, 0, 5, 10
