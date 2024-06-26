@@ -1,0 +1,95 @@
+# File name: elearn.kv
+#:kivy 2.3.0
+
+
+<LessonInfoButton>:
+    background_color: 0, 0, 0, 1
+    orientation: 'vertical'
+    
+    canvas.after:
+        Color:
+            rgba: 1, 1, 1, 1
+        Line:
+            rectangle: self.pos[0], self.pos[1], self.size[0], self.size[1]
+            dash_length: 10
+            dash_offset: 5
+            joint: 'round'
+            close: True
+    LessonInfoBtn:
+        text_size: root.width, None
+        text: root.name
+        on_press: self.parent.show_info()
+    GridLayout:
+        cols: 2
+        Label:
+            halign: 'left'
+            font_size: dp(20)
+            color: .5, .5, .5, 1
+            text_size: self.size
+            text: 'state: ' +  root.lesson_state
+        Label:
+            font_size: dp(20)
+            halign: 'left'
+            color: 1, 1, 1, 1
+            text_size: self.size
+            text: "instructor: name"
+        Label:
+            halign: 'left'
+            font_size: dp(20)
+            text_size: self.size
+            color: .5, .5, .5, 1
+            text: 'time: ' + '2014/09/17-2015/04/07'  
+
+    ScrollView:
+        id: __tags
+        do_scroll_x: True
+        do_scroll_y: False
+        size_hint_y: .3
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: None, 1
+            Label:
+                text: 'tags: '
+                size_hint: None, 1
+                padding: 10, 0, 5, 10
+            TagBtn:
+                text: 'tag1'
+            TagBtn:
+                text: 'long tag2'
+            TagBtn:
+                text: 'tag3'
+<LessonInfoBtn@Button>:
+    background_color: (0, 0, 0, 1)
+	font_size: dp(45)
+    canvas.after:
+        Color:
+            rgba: (1, 1, 1, 1)
+        Line:
+            width: 2
+            points: 0,0, self.width,0
+
+<TagBtn@Button>:
+    background_color: (0, 0, 0, 1)
+    text: 'tag'
+    size_hint: None, None
+    size: self.texture_size
+    font_size: dp(15)
+    padding: 10, 0, 5, 10
+    color: .5, .5, .5, 1
+    canvas.before:
+        Color:
+            rgba: (1, 1, 1, 1)
+        Line:
+            width: 1
+            points: self.x + self.width, self.y, self.x + self.width, self.y + self.height
+
+<LessonInfoRV>:
+    viewclass: 'LessonInfoButton'
+    RecycleBoxLayout:
+        padding: 30, 10, 30, 15
+        spacing: 20
+        default_size: None, dp(200)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
